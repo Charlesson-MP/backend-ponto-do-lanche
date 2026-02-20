@@ -12,19 +12,17 @@ const listProducts = async (req, res, next) => {
 const updateProduct = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { price } = req.body;
+    const productData = req.body;
 
     if (isNaN(id)) return res.status(400).json({ success: false, message: 'ID inválido.' });
-    if (price === undefined) return res.status(400).json({ success: false, message: 'Price is required' });
 
-    const updatedProduct = await productsService.updateProductPrice(id, price);
-
-    if (!updatedProduct) {
-      return res.status(404).json({ success: false, message: 'Produto não encontrado.' });
-    }
+    const updatedProduct = await productsService.updateProductDeep(id, productData);
 
     return res.json({ success: true, data: updatedProduct });
   } catch (err) {
+    if (err.status) {
+      return res.status(err.status).json({ success: false, message: err.message });
+    }
     next(err);
   }
 };
