@@ -1,33 +1,14 @@
 const { Router } = require('express');
-
 const router = Router();
 
-// Health-check / rota raiz da API
-router.get('/', (_req, res) => {
-  res.json({
-    success: true,
-    message: 'API Ponto do Lanche — funcionando! 🍔',
-    timestamp: new Date().toISOString(),
-  });
-});
+const storeSettingsRoutes = require('./store-settings.routes');
+const categoriesRoutes = require('./categories.routes');
+const productsRoutes = require('./products.routes');
+const ordersRoutes = require('./orders.routes');
 
-// Rota de teste
-router.get('/test', (_req, res) => {
-  res.json({
-    success: true,
-    message: 'Backend funcionando!',
-  });
-});
-
-// -----------------------------------------------
-// Registrar rotas dos módulos
-// -----------------------------------------------
-const produtosRoutes = require('./produtos.routes');
-const clientesRoutes = require('./clientes.routes');
-const pedidosRoutes = require('./pedidos.routes');
-
-router.use('/produtos', produtosRoutes);
-router.use('/clientes', clientesRoutes);
-router.use('/pedidos', pedidosRoutes);
+router.use('/store-settings', storeSettingsRoutes);
+router.use('/categories', categoriesRoutes);
+router.use('/products', productsRoutes);
+router.use('/orders', ordersRoutes);
 
 module.exports = router;

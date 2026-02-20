@@ -121,6 +121,7 @@ CREATE TABLE product_addons (
   price          DECIMAL(10,2) NOT NULL DEFAULT 0.00,
   is_active      BOOLEAN       NOT NULL DEFAULT TRUE,
   display_order  INTEGER       NOT NULL DEFAULT 0,
+  CONSTRAINT uq_addon_per_product UNIQUE (product_id, name),
   CONSTRAINT ck_addons_price_non_negative CHECK (price >= 0)
 );
 
@@ -202,9 +203,9 @@ CREATE TABLE orders (
   CONSTRAINT ck_orders_total_positive    CHECK(total >= 0),
   CONSTRAINT ck_orders_delivery_fee_non_negative CHECK(delivery_fee >= 0),
   CONSTRAINT ck_orders_delivery_address CHECK(
-    delivery_type = 'pickup' OR (delivery_type = 'delivery' AND delivery_address IS NOT NULL AND delivery_address <> '')
+    delivery_type = 'pickup' OR (delivery_type = 'delivery' AND delivery_address IS NOT NULL AND TRIM(delivery_address) <> '')
   ),
-  CONSTRAINT ck_orders_change_for CHECK(change_for IS NULL OR payment_method = 'cash')
+  CONSTRAINT ck_orders_change_for CHECK(change_for IS NULL OR (payment_method = 'cash' AND change_for >= total))
 );
 
 CREATE INDEX idx_orders_customer    ON orders(customer_id);
@@ -234,6 +235,7 @@ CREATE TABLE order_items (
   CONSTRAINT ck_order_items_quantity_positive CHECK(quantity >= 1),
   CONSTRAINT ck_order_items_base_price_positive CHECK(base_price >= 0),
   CONSTRAINT ck_order_items_final_price_positive CHECK(final_price >= 0),
+  CONSTRAINT ck_order_items_addons_total_positive CHECK(addons_total >= 0),
   CONSTRAINT ck_order_items_observation_length CHECK(observation IS NULL OR LENGTH(observation) <= 200)
 );
 

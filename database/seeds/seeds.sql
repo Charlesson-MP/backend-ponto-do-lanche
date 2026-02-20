@@ -3,6 +3,13 @@
 -- ============================================================
 
 -- =========================
+-- 0. Configurações da Loja
+-- =========================
+INSERT INTO store_settings (id, store_name, whatsapp_number, delivery_fee, max_addons, business_hours, is_store_open)
+VALUES
+  (1, 'Ponto do Lanche', '5511999999999', 5.00, 3, '{"monday": "18:00-23:00", "tuesday": "18:00-23:00", "wednesday": "18:00-23:00", "thursday": "18:00-23:00", "friday": "18:00-00:00", "saturday": "18:00-00:00", "sunday": "18:00-23:00"}', TRUE);
+
+-- =========================
 -- 1. Categorias
 -- =========================
 INSERT INTO categories (id, name, slug, display_order, is_active)
