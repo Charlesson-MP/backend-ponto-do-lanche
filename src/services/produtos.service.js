@@ -25,6 +25,21 @@ const findById = async (id) => {
 };
 
 /**
+ * Busca um produto pelo nome (case insensitive).
+ * @param {string} nome - Nome do produto
+ * @returns {Promise<Object|null>} Produto encontrado ou null
+ */
+const findByName = async (nome) => {
+  console.log(`Searching for product with name: ${nome}`);
+  const result = await db.query(
+    'SELECT id, nome FROM produtos WHERE LOWER(nome) = LOWER($1)',
+    [nome]
+  );
+  console.log('Query result:', result.rows);
+  return result.rows[0] || null;
+};
+
+/**
  * Cria um novo produto.
  *
  * Exemplo de payload:
@@ -80,6 +95,7 @@ const remove = async (id) => {
 module.exports = {
   listAll,
   findById,
+  findByName,
   create,
   update,
   remove,
