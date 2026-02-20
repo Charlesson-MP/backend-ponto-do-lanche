@@ -24,8 +24,10 @@ router.get('/test', (_req, res) => {
 // -----------------------------------------------
 const produtosRoutes = require('./produtos.routes');
 const clientesRoutes = require('./clientes.routes');
+const pedidosRoutes = require('./pedidos.routes');
 
 router.use('/produtos', produtosRoutes);
 router.use('/clientes', clientesRoutes);
+router.use('/pedidos', pedidosRoutes);
 
 module.exports = router;
