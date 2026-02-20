@@ -20,10 +20,9 @@ router.get('/test', (_req, res) => {
 });
 
 // -----------------------------------------------
-// Registrar rotas dos módulos aqui
-// Exemplo:
-//   const produtosRoutes = require('./produtos.routes');
-//   router.use('/produtos', produtosRoutes);
+// Registrar rotas dos módulos
 // -----------------------------------------------
+const produtosRoutes = require('./produtos.routes');
+router.use('/produtos', produtosRoutes);
 
 module.exports = router;
