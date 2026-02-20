@@ -11,6 +11,14 @@ router.get('/', (_req, res) => {
   });
 });
 
+// Rota de teste
+router.get('/test', (_req, res) => {
+  res.json({
+    success: true,
+    message: 'Backend funcionando!',
+  });
+});
+
 // -----------------------------------------------
 // Registrar rotas dos módulos aqui
 // Exemplo:
