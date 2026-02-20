@@ -1,9 +1,9 @@
-const { query } = require('../db');
+const categoriesService = require('../services/categories.service');
 
 const listCategories = async (req, res, next) => {
   try {
-    const result = await query('SELECT * FROM categories ORDER BY display_order ASC', []);
-    return res.json({ success: true, data: result.rows });
+    const categories = await categoriesService.listCategories();
+    return res.json({ success: true, data: categories });
   } catch (err) {
     next(err);
   }
